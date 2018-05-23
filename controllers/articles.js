@@ -10,3 +10,9 @@ exports.getArticles = (req, res, next) => {
     res.send({ articles });
   });
 };
+
+exports.getArticlesById = (req, res, next) => {
+  return Article.findById(req.params.id).then(article => {
+    res.send(article);
+  });
+};
