@@ -22,11 +22,11 @@ app.use((err, req, res, next) => {
   }
   if (err.status === 400) {
     res.status(404).send({ message: 'Bad Request' });
-  }
-  next(err);
+  } else next(err);
 });
 
 app.use((err, req, res, next) => {
+  console.log(err);
   res.status(500).send({ message: 'Internal Server Error' });
 });
 
