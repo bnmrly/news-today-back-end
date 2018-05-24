@@ -1,4 +1,4 @@
-const { Article } = require('../models');
+const { Article, Comment } = require('../models');
 
 // fn below gets both actors and queries e.g gender: female as without giving a query, it retuns ALL
 
@@ -16,3 +16,7 @@ exports.getArticlesById = (req, res, next) => {
     res.send(article);
   });
 };
+
+// exports.getCommentsForArticle = (req, res, next) => {
+//   console.log(Comment);
+// };
