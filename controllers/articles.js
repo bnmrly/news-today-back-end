@@ -41,8 +41,7 @@ exports.voteOnArticle = (req, res, next) => {
   const { article_id } = req.params;
   const { vote } = req.query;
   return Article.findByIdAndUpdate(article_id).then(article => {
-    if (vote === 'up') article.votes++;
-    else if (vote === 'down') article.votes--;
+    vote === 'up' ? article.votes++ : article.votes--;
     return article.save().then(article => res.send({ article }));
   });
 };
