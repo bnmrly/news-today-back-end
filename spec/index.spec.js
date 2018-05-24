@@ -7,13 +7,13 @@ const seedDB = require('../seed/seed.js');
 const testData = require('../seed/testdata');
 const request = require('supertest')(app);
 
-// need to add comments and users as not created yet
+// need to add comments  as not created yet
 describe('/api'),
   () => {
-    let articles, topics;
+    let articles, topics, users;
     beforeEach(() => {
       return seedDB(testData).then(docs => {
-        [articles, topics] = docs;
+        [articles, topics, users] = docs;
       });
     });
     after(() => {

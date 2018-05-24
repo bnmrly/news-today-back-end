@@ -7,7 +7,7 @@ exports.getArticles = (req, res, next) => {
 };
 
 exports.getArticlesById = (req, res, next) => {
-  return Article.findById(req.params.id).then(article => {
+  return Article.findById(req.params.article_id).then(article => {
     res.status(200).send(article);
   });
 };
@@ -35,4 +35,14 @@ exports.addCommentToArticle = (req, res, next) => {
       res.status(201).send(comment);
     })
     .catch(console.log);
+};
+
+exports.voteOnArticle = (req, res, next) => {
+  const { article_id } = req.params;
+  const { vote } = req.query;
+  return Article.findByIdAndUpdate(article_id).then(article => {
+    if (vote === 'up') article.votes++;
+    else if (vote === 'down') article.votes--;
+    return article.save().then(article => res.send({ article }));
+  });
 };
