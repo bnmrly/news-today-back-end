@@ -7,16 +7,20 @@ exports.getArticles = (req, res, next) => {
 };
 
 exports.getArticlesById = (req, res, next) => {
-  return Article.findById(req.params.article_id).then(article => {
-    res.status(200).send(article);
-  });
+  return Article.findById(req.params.article_id)
+    .then(article => {
+      res.status(200).send(article);
+    })
+    .catch(console.log);
 };
 
 exports.getCommentsForArticle = (req, res, next) => {
   const { article_id } = req.params;
-  return Comment.find({ belongs_to: article_id }).then(comments => {
-    res.status(200).send({ comments });
-  });
+  return Comment.find({ belongs_to: article_id })
+    .then(comments => {
+      res.status(200).send({ comments });
+    })
+    .catch(console.log);
 };
 
 exports.addCommentToArticle = (req, res, next) => {
@@ -40,8 +44,10 @@ exports.addCommentToArticle = (req, res, next) => {
 exports.voteOnArticle = (req, res, next) => {
   const { article_id } = req.params;
   const { vote } = req.query;
-  return Article.findByIdAndUpdate(article_id).then(article => {
-    vote === 'up' ? article.votes++ : article.votes--;
-    return article.save().then(article => res.send({ article }));
-  });
+  return Article.findByIdAndUpdate(article_id)
+    .then(article => {
+      vote === 'up' ? article.votes++ : article.votes--;
+      return article.save().then(article => res.send({ article }));
+    })
+    .catch(console.log);
 };

@@ -21,7 +21,6 @@ const seedDB = (
       return Promise.all([userPromises, topicPromises]);
     })
     .then(([userDocs, topicDocs]) => {
-      console.log(userDocs);
       const formattedArticles = articlesRawData.map(article => {
         const belongs_to = article.topic;
         const created_by = userDocs.find(
@@ -42,7 +41,6 @@ const seedDB = (
         )._id;
         return { ...comment, belongs_to, created_by };
       });
-      console.log(formattedComments);
       const commentPromises = Comment.insertMany(formattedComments);
       return Promise.all([userDocs, topicDocs, articleDocs, commentPromises]);
     });

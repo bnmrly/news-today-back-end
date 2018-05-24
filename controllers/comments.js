@@ -9,5 +9,15 @@ exports.voteOnComment = (req, res, next) => {
       vote === 'up' ? comment.votes++ : comment.votes--;
       return comment.save();
     })
-    .then(comment => res.send({ comment }));
+    .then(comment => res.send({ comment }))
+    .catch(console.log);
+};
+
+exports.deleteComment = (req, res, next) => {
+  const { comment_id } = req.params;
+  return Comment.findByIdAndRemove({ _id: comment_id })
+    .then(() => {
+      res.sendStatus(204);
+    })
+    .catch(console.log);
 };
