@@ -7,4 +7,7 @@ router.use('/topics', topicsRouter);
 const articlesRouter = require('./articles');
 router.use('/articles', articlesRouter);
 
+const userRouter = require('./users');
+router.use('/users', userRouter);
+
 module.exports = router;

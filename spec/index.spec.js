@@ -1,10 +1,35 @@
-const app = require('../app');
 // no need to set the process env here as done in the script
+
+const app = require('../app');
 const { expect } = require('chai');
 const mongoose = require('mongoose');
-const seedDb = require('../seed/seed');
-const testData = require('../seed/testData');
-const request = require('superest')(app);
+const seedDB = require('../seed/seed.js');
+const testData = require('../seed/testdata');
+const request = require('supertest')(app);
+
+// need to add comments and users as not created yet
+describe('/api'),
+  () => {
+    let articles, topics;
+    beforeEach(() => {
+      return seedDB(testData).then(docs => {
+        [articles, topics] = docs;
+      });
+    });
+    after(() => {
+      return mongoose.disconnect();
+    });
+    describe('/topics', () => {
+      it('GET sends back status 200 and etc', () => {
+        return request
+          .get('/actors')
+          .expect(200)
+          .then(res => {
+            expect(res.body.actors.length).to.equal();
+          });
+      });
+    });
+  };
 
 //describe('db name')
 

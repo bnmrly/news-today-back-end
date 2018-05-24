@@ -21,7 +21,6 @@ exports.getCommentsForArticle = (req, res, next) => {
 
 exports.addCommentToArticle = (req, res, next) => {
   const { article_id } = req.params;
-  // console.log(article_id);
   const { comment } = req.body;
   const userPromise = User.findOne();
   return userPromise
