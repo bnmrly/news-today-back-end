@@ -8,6 +8,8 @@ const request = require('superest')(app);
 
 //describe('db name')
 
+// let actors, comapnies, movies
+
 // before each
 
 // console.log db succesfully seeded with commentdocs.length

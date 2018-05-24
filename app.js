@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 if (!process.env.NODE_ENV) process.env.NODE_ENV = 'development';
 const db_url = require('./config')[process.env.NODE_ENV];
 
-mongoose.connect(db_url).then(() => console.log('connected to mongoDB'));
+mongoose.connect(db_url).then(() => console.log(`connected to ${db_url}`));
 
 const app = express();
 const bodyParser = require('body-parser');

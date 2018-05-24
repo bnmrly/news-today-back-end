@@ -1,19 +1,15 @@
 const { Topic, Article, User } = require('../models');
 
-// fn below gets both actors and queries e.g gender: female as without giving a query, it retuns ALL
-
-// run this to get the female actors http://localhost:3000/api/actors?gender=female
-
 exports.getTopics = (req, res, next) => {
   return Topic.find().then(topics => {
-    res.send({ topics });
+    res.status(200).send({ topics });
   });
 };
 
 exports.getArticlesByTopicSlug = (req, res, next) => {
   console.log(req.params);
   return Article.find(req.params).then(article => {
-    res.send(article);
+    res.status(200).send(article);
   });
 };
 
@@ -29,7 +25,7 @@ exports.addArticleToTopic = (req, res, next) => {
       });
     })
     .then(article => {
-      res.send(article);
+      res.status(201).send(article);
     })
     .catch(console.log);
 };
