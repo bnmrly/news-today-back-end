@@ -26,10 +26,8 @@ describe('/api', () => {
   after(() => {
     return mongoose.disconnect();
   });
-
-  // write test for home route
   describe('/users/:username', () => {
-    it('GET returns a 200 status and the user information', () => {
+    it('GET returns a 200 status and the user information for accurate input', () => {
       return request
         .get(`/api/users/${users[0].username}`)
         .expect(200)
@@ -52,7 +50,7 @@ describe('/api', () => {
     });
     it('GET sends back status 404 and error page', () => {
       return request
-        .get('/api/rtwger')
+        .get('/api/topics/rtwdssddsger')
         .expect(404)
         .then(res => {
           expect(res.body.message).to.equal('Page not found');
@@ -95,6 +93,14 @@ describe('/api', () => {
         .then(res => {
           expect(res.body.articles.length).to.equal(articles.length);
           expect(res.body.articles[0].comments).to.equal(2);
+        });
+    });
+    it('GET sends back status 400 and error page', () => {
+      return request
+        .get('/api/articles/rtwger')
+        .expect(400)
+        .then(res => {
+          expect(res.body.message).to.equal('Bad Request');
         });
     });
   });
@@ -150,8 +156,22 @@ describe('/api', () => {
     });
   });
   describe('/comments/:comment_id', () => {
-    it('PUT with a query of vote up returns a 200 status and increases comment vote by 1', () => {});
-    // it('PUT with a query of vote down returns a 201 status and decreases comment vote by 1', () => {});
+    it('PUT with a query of vote up returns a 200 status and increases comment vote by 1', () => {
+      return request
+        .put(`/api/comments/${comments[1]._id}?vote=up`)
+        .expect(200)
+        .then(res => {
+          expect(res.body.comment.votes).to.equal(20);
+        });
+    });
+    it('PUT with a query of vote down returns a 201 status and decreases comment vote by 1', () => {
+      return request
+        .put(`/api/comments/${comments[1]._id}?vote=down`)
+        .expect(200)
+        .then(res => {
+          expect(res.body.comment.votes).to.equal(18);
+        });
+    });
     it('DELETE returns a 204 status and removes a comment by id', () => {
       return request
         .delete(`/api/comments/${comments[0]._id}`)

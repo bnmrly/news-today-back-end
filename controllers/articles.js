@@ -5,6 +5,7 @@ exports.getArticles = (req, res, next) => {
     .lean()
     .populate('created_by', 'username')
     .then(articles => {
+      if (!articles) throw { status: 400 };
       const countPromises = articles.map(article =>
         Comment.count({ belongs_to: article._id })
       );
@@ -16,15 +17,22 @@ exports.getArticles = (req, res, next) => {
         comments: commentCounts[i]
       }));
       res.status(200).send({ articles });
+    })
+    .catch(err => {
+      next(err);
     });
 };
 
 exports.getArticlesById = (req, res, next) => {
   return Article.findById(req.params.article_id)
     .then(article => {
+      if (!article) throw { status: 404 };
       res.status(200).send(article);
     })
-    .catch(console.log);
+    .catch(err => {
+      if (err.name === 'CastError') return next({ status: 400 });
+      else next(err);
+    });
 };
 
 exports.getCommentsForArticle = (req, res, next) => {
@@ -32,9 +40,12 @@ exports.getCommentsForArticle = (req, res, next) => {
   return Comment.find({ belongs_to: article_id })
     .populate('created_by')
     .then(comments => {
+      if (!comments) throw { status: 404 };
       res.status(200).send({ comments });
     })
-    .catch(console.log);
+    .catch(err => {
+      next(err);
+    });
 };
 
 exports.addCommentToArticle = (req, res, next) => {

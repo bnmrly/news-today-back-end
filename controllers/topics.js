@@ -3,6 +3,7 @@ const { Topic, Article, User } = require('../models');
 exports.getTopics = (req, res, next) => {
   return Topic.find()
     .then(topics => {
+      if (!topics) throw { status: 404 };
       res.status(200).send({ topics });
     })
     .catch(console.log);
@@ -11,6 +12,7 @@ exports.getTopics = (req, res, next) => {
 exports.getArticlesByTopicSlug = (req, res, next) => {
   return Article.find(req.params)
     .then(article => {
+      if (!article) throw { status: 404 };
       res.status(200).send(article);
     })
     .catch(console.log);
