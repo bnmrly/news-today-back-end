@@ -1,7 +1,24 @@
+* {
+  font-family: 'Montserrat', sans-serif;
+  color: black;
+  list-style-type: none;
+  /* font-weight: 300; */
+}
+
 h1 {
-  color: yellow;
+  color: #f0ff9d;
+  text-transform: uppercase;
+}
+
+h2 {
+  color: #f0ff9d;
+  text-transform: uppercase;
+}
+
+h4 {
+  font-weight: 300;
 }
 
 body {
-  background-color: gray;
+  background-color: #a8a8a8;
 }
