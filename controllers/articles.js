@@ -1,24 +1,23 @@
 const { Article, Comment, User } = require('../models');
 
 exports.getArticles = (req, res, next) => {
-  return Article.find().then(articles => {
-    res.status(200).send({ articles });
-  });
+  Article.find()
+    .lean()
+    .populate('created_by', 'username')
+    .then(articles => {
+      const countPromises = articles.map(article =>
+        Comment.count({ belongs_to: article._id })
+      );
+      return Promise.all([articles, ...countPromises]);
+    })
+    .then(([articlesDocs, ...commentCounts]) => {
+      const articles = articlesDocs.map((article, i) => ({
+        ...article,
+        comments: commentCounts[i]
+      }));
+      res.status(200).send({ articles });
+    });
 };
-
-// exports.getArticles = (req, res, next) => {
-//   Article.find().lean()
-//     .then(articles => {
-//       return Promise.all([articles, ...articles.map(artObj => Comment.count({ belongs_to: artObj._id }))])
-//     })
-//     .then(([articles, ...commentCounts]) => {
-//       let result = articles.map((artObj, index) => {
-//         artObj.comments = commentCounts[index]
-//         return artObj;
-//       })
-//       res.send({ articles: result })
-//     })
-//  }
 
 exports.getArticlesById = (req, res, next) => {
   return Article.findById(req.params.article_id)
@@ -31,6 +30,7 @@ exports.getArticlesById = (req, res, next) => {
 exports.getCommentsForArticle = (req, res, next) => {
   const { article_id } = req.params;
   return Comment.find({ belongs_to: article_id })
+    .populate('created_by')
     .then(comments => {
       res.status(200).send({ comments });
     })

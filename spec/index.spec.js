@@ -94,6 +94,7 @@ describe('/api', () => {
         .expect(200)
         .then(res => {
           expect(res.body.articles.length).to.equal(articles.length);
+          expect(res.body.articles[0].comments).to.equal(2);
         });
     });
   });
@@ -136,10 +137,20 @@ describe('/api', () => {
           );
         });
     });
-    // it('POST returns a 201 status and the posted article when the data is correct', () => {});
+    it('POST returns a 201 status and the posted comment when the data is correct', () => {
+      return request
+        .post(`/api/articles/${articles[3]._id}/comments`)
+        .send({
+          comment: 'This is my new comment'
+        })
+        .expect(201)
+        .then(res => {
+          expect(res.body.body).to.equal('This is my new comment');
+        });
+    });
   });
   describe('/comments/:comment_id', () => {
-    // it('PUT with a query of vote up returns a 200 status and increases comment vote by 1', () => {});
+    it('PUT with a query of vote up returns a 200 status and increases comment vote by 1', () => {});
     // it('PUT with a query of vote down returns a 201 status and decreases comment vote by 1', () => {});
     it('DELETE returns a 204 status and removes a comment by id', () => {
       return request
