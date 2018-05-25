@@ -17,7 +17,7 @@ exports.deleteComment = (req, res, next) => {
   const { comment_id } = req.params;
   return Comment.findByIdAndRemove({ _id: comment_id })
     .then(() => {
-      res.sendStatus(204);
+      res.send({ message: 'successfully deleted comment' });
     })
     .catch(console.log);
 };

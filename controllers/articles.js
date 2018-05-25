@@ -6,6 +6,20 @@ exports.getArticles = (req, res, next) => {
   });
 };
 
+// exports.getArticles = (req, res, next) => {
+//   Article.find().lean()
+//     .then(articles => {
+//       return Promise.all([articles, ...articles.map(artObj => Comment.count({ belongs_to: artObj._id }))])
+//     })
+//     .then(([articles, ...commentCounts]) => {
+//       let result = articles.map((artObj, index) => {
+//         artObj.comments = commentCounts[index]
+//         return artObj;
+//       })
+//       res.send({ articles: result })
+//     })
+//  }
+
 exports.getArticlesById = (req, res, next) => {
   return Article.findById(req.params.article_id)
     .then(article => {
@@ -47,7 +61,7 @@ exports.voteOnArticle = (req, res, next) => {
   return Article.findByIdAndUpdate(article_id)
     .then(article => {
       vote === 'up' ? article.votes++ : article.votes--;
-      return article.save().then(article => res.send({ article }));
+      return article.save().then(article => res.status(200).send({ article }));
     })
     .catch(console.log);
 };
