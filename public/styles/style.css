@@ -6,12 +6,12 @@
 }
 
 h1 {
-  color: #f0ff9d;
+  color: #e9fc7d;
   text-transform: uppercase;
 }
 
 h2 {
-  color: #f0ff9d;
+  color: #e9fc7d;
   text-transform: uppercase;
 }
 
@@ -20,5 +20,11 @@ h4 {
 }
 
 body {
-  background-color: #a8a8a8;
+  background-color: #cecccc;
+}
+
+.container {
+  max-width: 80%;
+  margin-left: auto;
+  margin-right: auto;
 }
