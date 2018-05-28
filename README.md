@@ -1,32 +1,30 @@
 # Northcoders News
 
-Northcoders News is a social news aggregation, web content rating, and discussion website. It is similar to Reddit in that Northcoders News has articles which are divided into topics. Each article has user ratings and can be up or down voted using the API. Users can also add comments about an article. Comments can also be up or down voted.
+Northcoders News is a social news aggregation, web content rating, and discussion website. It is similar to Reddit as it has articles which are divided into topics. Each article has user ratings and can be voted up or down using the API. Users can also add comments about an article and comments can also be voted up or down.
 
 ## Installation Instructions
 
-You will need to install Node.js to run Northcoders News. Type the command below to check if you already have node installed:
+You need to install Node.js to run Northcoders News. To check if you already have node installed, please type the following command:
 
 `$ node -v`
 
-If it is already installed, the output of the command will display the version (e.g. v7.9.0). If you need to install node please follow link (http://nodejs.org/en/).
+If it is already installed, the output will display which version you are running. If you don't see the version number, you will need to install node by clicking here: http://nodejs.org/en/
 
-### Install Northcoders News
-
-Please clone the repository https://github.com/bnmrly/BE-FT-northcoders-news
+Once Node is installed, please clone this repository: https://github.com/bnmrly/BE-FT-northcoders-news by typing the following command:
 
 `$ git clone https://github.com/bnmrly/BE-FT-northcoders-news`
 
-To install all dependencies please navigate to the correct directory and enter the following commands into the terminal:-
+To install all dependencies please enter the following commands into the terminal, in the root of 'BE-FT-northcoders-news'
 
 `$ npm install`
 
-Open an additional terminal window and type the following command to run the application in development mode
+Then type the following command to run the application in development mode
 
 `$ npm run dev`
 
-### Test Suite
+## Test Suite
 
-To run the test suite please enter the following command into the terminal
+To run the test suite please type:
 
 `$ npm test`
 
@@ -38,4 +36,4 @@ Ben Marley
 
 ## Acknowledgments
 
-Sincere thanks to all the great staff at Northcoders, particularly Ant Medina who has requested a special acknowledgement, and Jac Darby for the great support, as well as all my fellow students.
+Thanks to my fellow students and all the great staff at Northcoders, with special thanks to Jac Darby, for his support and mentorship.
