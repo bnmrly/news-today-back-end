@@ -1,19 +1,21 @@
 const express = require('express');
+const app = express();
 const mongoose = require('mongoose');
+const path = require('path');
+const bodyParser = require('body-parser');
+const apiRouter = require('./routes/api');
 
 if (!process.env.NODE_ENV) process.env.NODE_ENV = 'development';
-const db_url =
+const { db_url } =
   process.env.NODE_ENV === 'production'
-    ? process.env.db_url
+    ? process.env
     : require('./config')[process.env.NODE_ENV];
 
 mongoose.connect(db_url).then(() => console.log(`connected to ${db_url}`));
-const path = require('path');
-const app = express();
-const bodyParser = require('body-parser');
+
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
-const apiRouter = require('./routes/api');
+
 app.use('/api', apiRouter);
 
 app.get('/*', (req, res, next) => {

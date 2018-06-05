@@ -24,10 +24,13 @@ exports.getArticles = (req, res, next) => {
 };
 
 exports.getArticlesById = (req, res, next) => {
-  return Article.findById(req.params.article_id)
-    .then(article => {
+  return Promise.all([
+    Article.findById(req.params.article_id).lean(),
+    Comment.count({ belongs_to: req.params.article_id })
+  ])
+    .then(([article, commentCount]) => {
       if (!article) throw { status: 404 };
-      res.status(200).send(article);
+      res.status(200).send({ ...article, comments: commentCount });
     })
     .catch(err => {
       if (err.name === 'CastError') return next({ status: 400 });

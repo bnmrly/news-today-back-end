@@ -7,6 +7,8 @@ const {
   usersRawData
 } = require('./devData/');
 
+const { formatArticles, formatComments } = require('../utils/seed.utils');
+
 const seedDB = (
   articlesRawData,
   commentsRawData,
@@ -21,26 +23,16 @@ const seedDB = (
       return Promise.all([userPromises, topicPromises]);
     })
     .then(([userDocs, topicDocs]) => {
-      const formattedArticles = articlesRawData.map(article => {
-        const belongs_to = article.topic;
-        const created_by = userDocs.find(
-          user => user.username === article.created_by
-        )._id;
-        return { ...article, belongs_to, created_by };
-      });
+      const formattedArticles = formatArticles(articlesRawData, userDocs);
       const articlePromises = Article.insertMany(formattedArticles);
       return Promise.all([userDocs, topicDocs, articlePromises]);
     })
     .then(([userDocs, topicDocs, articleDocs]) => {
-      const formattedComments = commentsRawData.map(comment => {
-        const belongs_to = articleDocs.find(
-          article => article.title === comment.belongs_to
-        )._id;
-        const created_by = userDocs.find(
-          user => user.username === comment.created_by
-        )._id;
-        return { ...comment, belongs_to, created_by };
-      });
+      const formattedComments = formatComments(
+        commentsRawData,
+        articleDocs,
+        userDocs
+      );
       const commentPromises = Comment.insertMany(formattedComments);
       return Promise.all([userDocs, topicDocs, articleDocs, commentPromises]);
     });
