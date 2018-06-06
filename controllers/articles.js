@@ -72,10 +72,12 @@ exports.addCommentToArticle = (req, res, next) => {
 exports.voteOnArticle = (req, res, next) => {
   const { article_id } = req.params;
   const { vote } = req.query;
-  return Article.findByIdAndUpdate(article_id)
-    .then(article => {
-      vote === 'up' ? article.votes++ : article.votes--;
-      return article.save().then(article => res.status(200).send({ article }));
-    })
+  const amount = vote === 'up' ? 1 : vote === 'down' ? -1 : 0;
+  return Article.findByIdAndUpdate(
+    article_id,
+    { $inc: { votes: amount } },
+    { new: true }
+  )
+    .then(article => res.status(200).send({ article }))
     .catch(console.log);
 };
