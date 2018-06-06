@@ -6,16 +6,16 @@ exports.getTopics = (req, res, next) => {
       if (!topics) throw { status: 404 };
       res.status(200).send({ topics });
     })
-    .catch(console.log);
+    .catch(next);
 };
 
 exports.getArticlesByTopicSlug = (req, res, next) => {
   return Article.find(req.params)
-    .then(article => {
-      if (!article) throw { status: 404 };
-      res.status(200).send(article);
+    .then(articles => {
+      if (!articles.length) throw { status: 404 };
+      res.status(200).send(articles);
     })
-    .catch(console.log);
+    .catch(next);
 };
 
 exports.addArticleToTopic = (req, res, next) => {
@@ -31,5 +31,5 @@ exports.addArticleToTopic = (req, res, next) => {
     .then(article => {
       res.status(201).send(article);
     })
-    .catch(console.log);
+    .catch(next);
 };
