@@ -84,6 +84,18 @@ describe('/api', () => {
           });
         });
     });
+    it('POST returns a 400 when the data is correct', () => {
+      return request
+        .post('/api/topics/coding/articles')
+        .send({
+          title: 'this is my new article title',
+          incorrect: 'This is my new article content'
+        })
+        .expect(400)
+        .then(res => {
+          expect(res.body.message).to.equal('Bad Request');
+        });
+    });
   });
   describe('/articles/', () => {
     it('GET returns a 200 status and all articles', () => {
@@ -154,6 +166,17 @@ describe('/api', () => {
           expect(res.body.body).to.equal('This is my new comment');
         });
     });
+    it('POST returns a 400 status for an incorrectly formatted comment', () => {
+      return request
+        .post(`/api/articles/${articles[3]._id}/comments`)
+        .send({
+          'wrong key name': 'This is my new article content'
+        })
+        .expect(400)
+        .then(res => {
+          expect(res.body.message).to.equal('Bad Request');
+        });
+    });
   });
   describe('/comments/:comment_id', () => {
     it('PUT with a query of vote up returns a 200 status and increases comment vote by 1', () => {
@@ -178,6 +201,14 @@ describe('/api', () => {
         .expect(200)
         .then(res => {
           expect(res.body.message).to.equal('successfully deleted comment');
+        });
+    });
+    it('DELETE returns a 400 status for an incorrect id', () => {
+      return request
+        .delete('/api/comments/sdffsdfsd')
+        .expect(400)
+        .then(res => {
+          expect(res.body.message).to.equal('Bad Request');
         });
     });
   });

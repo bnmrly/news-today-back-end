@@ -31,5 +31,8 @@ exports.addArticleToTopic = (req, res, next) => {
     .then(article => {
       res.status(201).send(article);
     })
-    .catch(next);
+    .catch(err => {
+      if (err.name === 'ValidationError') return next({ status: 400 });
+      else next(err);
+    });
 };

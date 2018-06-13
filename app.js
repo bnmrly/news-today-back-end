@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const path = require('path');
 const bodyParser = require('body-parser');
 const apiRouter = require('./routes/api');
+const cors = require('cors');
 
 if (!process.env.NODE_ENV) process.env.NODE_ENV = 'development';
 const { db_url } =
@@ -14,9 +15,14 @@ const { db_url } =
 mongoose.connect(db_url).then(() => console.log(`connected to ${db_url}`));
 
 app.use(bodyParser.json());
+app.use(cors());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/api', apiRouter);
+
+app.get('/', (req, res, next) => {
+  res.sendFile(path.join(__dirname, './public/html/index.html'));
+});
 
 app.get('/*', (req, res, next) => {
   next({ status: 404 });

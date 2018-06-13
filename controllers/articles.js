@@ -19,7 +19,8 @@ exports.getArticles = (req, res, next) => {
       res.status(200).send({ articles });
     })
     .catch(err => {
-      next(err);
+      if (err.name === 'CastError') return next({ status: 400 });
+      else next(err);
     });
 };
 
@@ -47,7 +48,8 @@ exports.getCommentsForArticle = (req, res, next) => {
       res.status(200).send({ comments });
     })
     .catch(err => {
-      next(err);
+      if (err.name === 'CastError') return next({ status: 400 });
+      else next(err);
     });
 };
 
@@ -66,7 +68,10 @@ exports.addCommentToArticle = (req, res, next) => {
     .then(comment => {
       res.status(201).send(comment);
     })
-    .catch(console.log);
+    .catch(err => {
+      if (err.name === 'ValidationError') return next({ status: 400 });
+      else next(err);
+    });
 };
 
 exports.voteOnArticle = (req, res, next) => {
@@ -79,5 +84,5 @@ exports.voteOnArticle = (req, res, next) => {
     { new: true }
   )
     .then(article => res.status(200).send({ article }))
-    .catch(console.log);
+    .catch(next);
 };

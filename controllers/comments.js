@@ -1,16 +1,16 @@
 const { Comment } = require('../models');
 
-// consider incorrect input on vote
 exports.voteOnComment = (req, res, next) => {
   const { comment_id } = req.params;
   const { vote } = req.query;
-  return Comment.findByIdAndUpdate(comment_id)
-    .then(comment => {
-      vote === 'up' ? comment.votes++ : comment.votes--;
-      return comment.save();
-    })
+  const amount = vote === 'up' ? 1 : vote === 'down' ? -1 : 0;
+  return Comment.findByIdAndUpdate(
+    comment_id,
+    { $inc: { votes: amount } },
+    { new: true }
+  )
     .then(comment => res.send({ comment }))
-    .catch(console.log);
+    .catch(next);
 };
 
 exports.deleteComment = (req, res, next) => {
@@ -19,5 +19,8 @@ exports.deleteComment = (req, res, next) => {
     .then(() => {
       res.send({ message: 'successfully deleted comment' });
     })
-    .catch(console.log);
+    .catch(err => {
+      if (err.name === 'CastError') return next({ status: 400 });
+      else next(err);
+    });
 };
