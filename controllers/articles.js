@@ -26,9 +26,12 @@ exports.getArticles = (req, res, next) => {
 
 exports.getArticlesById = (req, res, next) => {
   return Promise.all([
-    Article.findById(req.params.article_id).lean(),
+    Article.findById(req.params.article_id)
+      .lean()
+      .populate('created_by'),
     Comment.count({ belongs_to: req.params.article_id })
   ])
+
     .then(([article, commentCount]) => {
       if (!article) throw { status: 404 };
       res.status(200).send({ ...article, comments: commentCount });
