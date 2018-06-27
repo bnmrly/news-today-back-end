@@ -65,7 +65,7 @@ exports.addCommentToArticle = (req, res, next) => {
       return Comment.create({
         body: comment,
         belongs_to: article_id,
-        created_by: user._id
+        created_by: user
       });
     })
     .then(comment => {
