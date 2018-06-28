@@ -1,4 +1,4 @@
-const { Topic, Article, User } = require('../models');
+const { Topic, Article, User, Comment } = require('../models');
 
 exports.getTopics = (req, res, next) => {
   return Topic.find()
@@ -11,11 +11,26 @@ exports.getTopics = (req, res, next) => {
 
 exports.getArticlesByTopicSlug = (req, res, next) => {
   return Article.find(req.params)
+    .lean()
+    .populate('created_by')
     .then(articles => {
-      if (!articles.length) throw { status: 404 };
-      res.status(200).send(articles);
+      if (!articles) throw { status: 400 };
+      const countPromises = articles.map(article =>
+        Comment.count({ belongs_to: article._id })
+      );
+      return Promise.all([articles, ...countPromises]);
     })
-    .catch(next);
+    .then(([articlesDocs, ...commentCounts]) => {
+      const articles = articlesDocs.map((article, i) => ({
+        ...article,
+        comments: commentCounts[i]
+      }));
+      res.status(200).send({ articles });
+    })
+    .catch(err => {
+      if (err.name === 'CastError') return next({ status: 400 });
+      else next(err);
+    });
 };
 
 exports.addArticleToTopic = (req, res, next) => {
