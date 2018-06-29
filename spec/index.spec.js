@@ -32,7 +32,7 @@ describe('/api', () => {
         .get(`/api/users/${users[0].username}`)
         .expect(200)
         .then(res => {
-          expect(res.body.user[0].avatar_url).to.equal(
+          expect(res.body.user.avatar_url).to.equal(
             'https://www.healthytherapies.com/wp-content/uploads/2016/06/Lime3.jpg'
           );
         });
@@ -63,8 +63,8 @@ describe('/api', () => {
         .get('/api/topics/mitch/articles')
         .expect(200)
         .then(res => {
-          expect(res.body.length).to.equal(2);
-          expect(res.body[0].body).to.equal(
+          expect(res.body.articles.length).to.equal(2);
+          expect(res.body.articles[0].body).to.equal(
             'I find this existence challenging'
           );
         });
@@ -80,7 +80,7 @@ describe('/api', () => {
         .then(res => {
           expect(res.body.title).to.equal('this is my new article title');
           return request.get('/api/topics/cats/articles').then(res => {
-            expect(res.body.length).to.equal(3);
+            expect(res.body.articles.length).to.equal(3);
           });
         });
     });
