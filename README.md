@@ -21,13 +21,13 @@ You will need [node](https://nodejs.org/en/) and [mongo](https://docs.mongodb.co
 Clone this repository with the terminal command:
 
 ```
-git clone https://github.com/bnmrly/BE-FT-northcoders-news.git
+git clone https://github.com/bnmrly/news-today-back-end.git
 ```
 
 Navigate to the Northcoders News Directory
 
 ```
-cd BE-FT-northcoders-news
+cd news-today-back-end
 ```
 
 Then run the the following command to install all dependencies:
