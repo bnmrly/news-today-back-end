@@ -18,10 +18,10 @@ You will need [node](https://nodejs.org/en/) and [mongo](https://docs.mongodb.co
 
 ## Installation
 
-Clone this repository with the terminal command:
+Plese fork and clone this repository with the terminal command:
 
 ```
-git clone https://github.com/bnmrly/news-today-back-end.git
+git clone https://github.com/<yourusername>/news-today-back-end.git
 ```
 
 Navigate to the Northcoders News Directory
@@ -30,7 +30,7 @@ Navigate to the Northcoders News Directory
 cd news-today-back-end
 ```
 
-Then run the the following command to install all dependencies:
+Then run the the following command to install all dependencies, which can be seen in the package.json file
 
 ```
 npm i
@@ -44,9 +44,44 @@ To run the environment locally, you wil need to have mongod running. Please ente
 mongod
 ```
 
-There is some config setup required to sucessfully connect to the local dev/test mongo url, you can run the following command as a shortcut to create & populate the config files:
+## Config
 
-...
+Please make a config folder with the following three files:
+
+an index.js file with:
+
+```
+module.exports = {
+  test: require('./test'),
+  development: require('./development')
+};
+```
+
+a development.js file with:
+
+```
+module.exports = { db_url: 'mongodb://localhost:27017/<db-filename>' };
+```
+
+a test.js file with:
+
+```
+module.exports = { db_url: 'mongodb://localhost:27017/<db-filename-test>' };
+```
+
+IMPORTANT NOTES:
+
+Please ensure your config and node modules are included in your .gitignore file
+
+## Seed instructions
+
+A command line script for seeing your database has been written for you, please see package.json scripts. This can be done with the following command:
+
+```
+npm run seed:dev
+```
+
+The test database is seeded before each it block is executed.
 
 You can now launch the api locally with the command:
 
@@ -86,6 +121,12 @@ This will automatically connect to the test database, seed the raw test data bef
 - Mocha
 - Chai
 - Supertest
+
+## Authors
+
+Ben Marley
+
+[http://benmarley.co.uk/](http://benmarley.co.uk/)
 
 ## Acknowledgments
 
