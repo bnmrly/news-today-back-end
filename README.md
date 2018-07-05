@@ -1,70 +1,91 @@
 # Northcoders News
 
-Northcoders News is a social news aggregation and rating website. It is similar to Reddit as it has articles which are divided into topics. Each article has user ratings and can be voted up or down using the API. Users can also add comments to an article and these comments can also be voted up or down.
+Northcoders News is a social news aggregation and rating website.
+
+It allows you to:
+
+- Read and post articles based on topic
+- Comment on articles (and delete your comment)
+- Vote for (and against!) previously posted articles and comments
 
 ## API
 
-Please click here for a link to the API : https://ben-nc-news.herokuapp.com/API
+Please click here for a link to the RESTful API : https://ben-nc-news.herokuapp.com/API which details routes and methods.
 
-## Installation Instructions
+## Getting started
 
-You will need Node.js to run Northcoders News. To check if it is installed, please type the following terminal command:
+You will need [node](https://nodejs.org/en/) and [mongo](https://docs.mongodb.com/manual/installation/) installed, please follow the links for instructions on how to do this.
 
-```
-$ node -v
-```
+## Installation
 
-If already installed, the output will display the version number. If not, please click here to install node: http://nodejs.org/en/
-
-Once Node is installed, please install Mongo - further info here: https://docs.mongodb.com/manual/installation/
-
-Once Node and Mongo is installed, please clone this repository: https://github.com/bnmrly/BE-FT-northcoders-news by typing the following command:
+Clone this repository with the terminal command:
 
 ```
-$ git clone https://github.com/bnmrly/BE-FT-northcoders-news
+git clone https://github.com/bnmrly/BE-FT-northcoders-news.git
 ```
 
-To install all dependencies please enter the following commands into the terminal, in the root of 'BE-FT-northcoders-news'
+Navigate to the Northcoders News Directory
 
 ```
-$ npm install
+cd BE-FT-northcoders-news
+```
+
+Then run the the following command to install all dependencies:
+
+```
+npm i
 ```
 
 ## Running the local development environment
 
-Please run mongod in a seperate shell to run the environment on your local machine:
+To run the environment locally, you wil need to have mongod running. Please enter the following command in a seperate shell:
 
 ```
 mongod
 ```
 
-Then type the following command to launch the api locally in development mode
+There is some config setup required to sucessfully connect to the local dev/test mongo url, you can run the following command as a shortcut to create & populate the config files:
+
+...
+
+You can now launch the api locally with the command:
 
 ```
-$ npm run dev
+npm run dev
 ```
 
-This will seed the development database and start Nodemon, which will restart if any changes are made to the code.
+The dev enviroment will default to serve the api on port 9090 and connect to the local dev database. [Nodemon](https://nodemon.io/) will automatically restart the server if you save any changes in the codebase.
 
-You can access the local api in your browser at:
+You should be able to access the local api in your browser:
 
 ```
 http://localhost:9090/api
 ```
 
-## Test Suite
-
-To run the test suite please type:
+For example, accessing the below should return all 36 dev articles:
 
 ```
-$ npm test
+http://localhost:9090/api/articles
 ```
 
-## Author
+## Testing
 
-Ben Marley
+There is a full test-suite available which tests all routes and methods on the api. You can run the tests with the following command:
 
-[http://benmarley.co.uk/](http://benmarley.co.uk/)
+```
+npm test
+```
+
+This will automatically connect to the test database, seed the raw test data before each test and disconnect from the test database when complete.
+
+## Built With
+
+- Express
+- MongoDB
+- Mongoose
+- Mocha
+- Chai
+- Supertest
 
 ## Acknowledgments
 
