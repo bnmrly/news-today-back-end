@@ -1,6 +1,6 @@
-# Northcoders News
+# News Today
 
-Northcoders News is a social news aggregation and rating website.
+News Today is a social news aggregation and rating website.
 
 It allows you to:
 
@@ -24,7 +24,7 @@ Plese fork and clone this repository with the terminal command:
 git clone https://github.com/<yourusername>/news-today-back-end.git
 ```
 
-Navigate to the Northcoders News Directory
+Navigate to the News Today Directory
 
 ```
 cd news-today-back-end
