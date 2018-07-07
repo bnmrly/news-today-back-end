@@ -1,7 +1,7 @@
 {
   "name": "news-today-api",
   "version": "1.0.0",
-  "description": "News Today API Sprint",
+  "description": "Northcoders News API Sprint",
   "main": "index.js",
   "scripts": {
     "test": "NODE_ENV=test mocha spec/",
